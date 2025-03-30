@@ -6,15 +6,12 @@ import java.util.ArrayList;
 
 public class Database {
     static private ArrayList<Entity> entities = new ArrayList<>();
+    static public int nextId = 1;
 
     static void add(Entity e) {
         entities.add(e);
-//        int id = entities.size();
-//        for(Entity entity: entities){
-//            if(entity.id > id || entity.id == id)
-//                id++;
-//        }
-        e.id = entities.size();
+        e.id = nextId;
+        nextId++;
     }
 
     static Entity get(int id) throws EntityNotFoundException {
