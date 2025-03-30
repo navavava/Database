@@ -14,7 +14,7 @@ public class Database {
         nextId++;
     }
 
-    static Entity get(int id) throws EntityNotFoundException {
+    static Entity get(int id) {
         for (Entity e : entities) {
             if (e.id == id) return e;
         }
