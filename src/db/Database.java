@@ -18,7 +18,7 @@ public class Database {
         for (Entity e : entities) {
             if (e.id == id) return e;
         }
-        throw new EntityNotFoundException("Entity not found!");
+        throw new EntityNotFoundException(id);
     }
 
     public static void delete(int id) {
@@ -29,7 +29,7 @@ public class Database {
             break;
         }
         if (!exists)
-            throw new EntityNotFoundException("Entity not found!");
+            throw new EntityNotFoundException(id);
     }
 
     public static void update(Entity e) {
@@ -43,6 +43,6 @@ public class Database {
             }
         }
         if (!exists)
-            throw new EntityNotFoundException("Entity not found!");
+            throw new EntityNotFoundException();
     }
 }
