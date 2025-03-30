@@ -26,6 +26,7 @@ public class Database {
         for (Entity e : entities) {
             if (e.id == id) entities.remove(e);
             exists = true;
+            break;
         }
         if (!exists)
             throw new EntityNotFoundException("Entity not found!");
