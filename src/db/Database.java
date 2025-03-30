@@ -22,19 +22,26 @@ public class Database {
     }
 
     public static void delete(int id) {
+        boolean exists = false;
         for (Entity e : entities) {
             if (e.id == id) entities.remove(e);
+            exists = true;
         }
-        throw new EntityNotFoundException("Entity not found!");
+        if (!exists)
+            throw new EntityNotFoundException("Entity not found!");
     }
 
     public static void update(Entity e) {
+        boolean exists = false;
         for (Entity entity : entities) {
             if (e.id == entity.id) {
                 entities.remove(entity);
                 entities.add(e);
+                exists = true;
+                break;
             }
         }
-        throw new EntityNotFoundException("Entity not found!");
+        if (!exists)
+            throw new EntityNotFoundException("Entity not found!");
     }
 }
