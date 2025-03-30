@@ -1,5 +1,5 @@
 package db;
 
-abstract class Entity {
+abstract public class Entity {
     public int id;
 }
