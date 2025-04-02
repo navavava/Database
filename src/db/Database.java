@@ -9,14 +9,14 @@ public class Database {
     static public int nextId = 1;
 
     public static void add(Entity e) {
-        entities.add(e);
         e.id = nextId;
         nextId++;
+        entities.add(e.copy());
     }
 
     public static Entity get(int id) {
         for (Entity e : entities) {
-            if (e.id == id) return e;
+            if (e.id == id) return e.copy();
         }
         throw new EntityNotFoundException(id);
     }
@@ -37,7 +37,7 @@ public class Database {
         for (Entity entity : entities) {
             if (e.id == entity.id) {
                 entities.remove(entity);
-                entities.add(e);
+                entities.add(e.copy());
                 exists = true;
                 break;
             }
