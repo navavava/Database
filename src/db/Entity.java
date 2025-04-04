@@ -1,7 +1,10 @@
 package db;
 
-abstract public class Entity {
+abstract public class Entity implements Cloneable{
     public int id;
 
-    public abstract Entity copy();
+    public Object clone() throws CloneNotSupportedException{
+        return super.clone();
+    }
+//    public abstract Entity copy();
 }
