@@ -11,12 +11,23 @@ public class Database {
     public static void add(Entity e) {
         e.id = nextId;
         nextId++;
-        entities.add(e.copy());
+        try {
+            entities.add((Entity) e.clone());
+        } catch (CloneNotSupportedException ex) {
+            throw new RuntimeException("This object cannot be cloned.");
+        }
+
     }
 
     public static Entity get(int id) {
         for (Entity e : entities) {
-            if (e.id == id) return e.copy();
+            if (e.id == id) {
+                try {
+                    return (Entity) e.clone();
+                } catch (CloneNotSupportedException ex) {
+                    throw new RuntimeException("This object cannot be cloned.");
+                }
+            }
         }
         throw new EntityNotFoundException(id);
     }
@@ -36,8 +47,12 @@ public class Database {
         boolean exists = false;
         for (Entity entity : entities) {
             if (e.id == entity.id) {
-                entities.remove(entity);
-                entities.add(e.copy());
+                try {
+                    entities.remove(entity);
+                    entities.add((Entity) e.clone());
+                } catch (CloneNotSupportedException ex) {
+                    throw new RuntimeException("This object cannot be cloned.");
+                }
                 exists = true;
                 break;
             }
