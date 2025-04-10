@@ -3,10 +3,13 @@ package db;
 import db.exception.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Database {
     static private ArrayList<Entity> entities = new ArrayList<>();
     static public int nextId = 1;
+    private static HashMap<Integer, Validator> validators = new HashMap<>();
+
 
     public static void add(Entity e) {
         e.id = nextId;
@@ -59,5 +62,13 @@ public class Database {
         }
         if (!exists)
             throw new EntityNotFoundException();
+    }
+
+    public static void registerValidator(int entityCode, Validator validator) {
+        for (Integer key : validators.keySet()) {
+            if (entityCode == key)
+                throw new IllegalArgumentException("Validator with this code already exists.");
+        }
+        validators.put(entityCode,validator);
     }
 }
