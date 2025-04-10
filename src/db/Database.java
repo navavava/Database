@@ -11,9 +11,11 @@ public class Database {
     private static HashMap<Integer, Validator> validators = new HashMap<>();
 
 
-    public static void add(Entity e) {
+    public static void add(Entity e) throws InvalidEntityException{
         e.id = nextId;
         nextId++;
+        Validator validator = validators.get(e.getEntityCode());
+        validator.validate(e);
         try {
             entities.add((Entity) e.clone());
         } catch (CloneNotSupportedException ex) {
@@ -46,7 +48,9 @@ public class Database {
             throw new EntityNotFoundException(id);
     }
 
-    public static void update(Entity e) {
+    public static void update(Entity e) throws InvalidEntityException {
+        Validator validator = validators.get(e.getEntityCode());
+        validator.validate(e);
         boolean exists = false;
         for (Entity entity : entities) {
             if (e.id == entity.id) {
