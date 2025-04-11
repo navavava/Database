@@ -14,7 +14,7 @@ public class Step extends Entity {
         Completed;
     }
 
-    public Step(String title, Status status, int taskRef) {
+    public Step(String title, int taskRef, Status status) {
         this.title = title;
         this.status = status;
         this.taskRef = taskRef;
