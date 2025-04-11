@@ -1,6 +1,8 @@
 package db.example;
+
 import db.Entity;
 import db.Trackable;
+
 import java.util.Date;
 
 public class Document extends Entity implements Trackable {
@@ -36,5 +38,17 @@ public class Document extends Entity implements Trackable {
     @Override
     public Date getLastModificationDate() {
         return LastModificationDate;
+    }
+
+    @Override
+    public Document clone() throws CloneNotSupportedException {
+        Document doc;
+        Date creationDate = this.CreationDate;
+        Date LastModificationDate = this.LastModificationDate;
+        doc = (Document) super.clone();
+        doc.setCreationDate(creationDate);
+        doc.setLastModificationDate(LastModificationDate);
+
+        return doc;
     }
 }
