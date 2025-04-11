@@ -1,5 +1,4 @@
 package db.example;
-
 import db.Entity;
 
 public class Human extends Entity {
@@ -17,4 +16,8 @@ public class Human extends Entity {
         return HUMAN_ENTITY_CODE;
     }
 
+    @Override
+    public Human clone() throws CloneNotSupportedException {
+        return (Human)super.clone();
+    }
 }
