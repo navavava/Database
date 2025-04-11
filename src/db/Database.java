@@ -95,4 +95,19 @@ public class Database {
         }
         validators.put(entityCode, validator);
     }
+
+    public static ArrayList<Entity> getAll(int entityCode) {
+        boolean um = false;
+        ArrayList<Entity> ents = new ArrayList<>();
+        for (Entity e : entities) {
+            if (e.entityCode == entityCode) {
+                ents.add(e);
+                um = true;
+            }
+        }
+        if (!um)
+            throw new EntityNotFoundException("Entity with this ENTITY CODE does not exist.");
+        else
+            return ents;
+    }
 }

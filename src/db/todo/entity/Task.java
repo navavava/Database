@@ -23,6 +23,7 @@ public class Task extends Entity implements Trackable {
         this.description = description;
         this.dueDate = dueDate;
         this.status = status;
+        this.entityCode = TASK_ENTITY_CODE;
     }
 
     @Override

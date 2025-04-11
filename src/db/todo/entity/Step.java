@@ -18,6 +18,7 @@ public class Step extends Entity {
         this.title = title;
         this.status = status;
         this.taskRef = taskRef;
+        this.entityCode = STEP_ENTITY_CODE;
     }
 
     @Override
