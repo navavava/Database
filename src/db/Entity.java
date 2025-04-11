@@ -6,5 +6,6 @@ abstract public class Entity implements Cloneable{
     public Object clone() throws CloneNotSupportedException{
         return super.clone();
     }
-//    public abstract Entity copy();
+
+    public abstract int getEntityCode();
 }
