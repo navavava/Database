@@ -4,8 +4,6 @@ import db.Validator;
 import db.exception.EntityNotFoundException;
 import db.exception.InvalidEntityException;
 import db.todo.entity.Step;
-import db.todo.entity.Task;
-
 import static db.Database.entityExists;
 
 
