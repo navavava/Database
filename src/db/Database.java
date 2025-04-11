@@ -30,6 +30,16 @@ public class Database {
         }
     }
 
+    //my own method
+    public static boolean entityExists(int id) {
+        for (Entity e : entities) {
+            if (e.id == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static Entity get(int id) {
         for (Entity e : entities) {
             if (e.id == id) {
