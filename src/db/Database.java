@@ -3,6 +3,7 @@ package db;
 import db.exception.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class Database {
@@ -11,17 +12,20 @@ public class Database {
     private static HashMap<Integer, Validator> validators = new HashMap<>();
 
 
-    public static void add(Entity e) throws InvalidEntityException{
-        e.id = nextId;
-        nextId++;
+    public static void add(Entity e) throws InvalidEntityException {
         Validator validator = validators.get(e.getEntityCode());
         validator.validate(e);
+        e.id = nextId;
+        nextId++;
         try {
             entities.add((Entity) e.clone());
         } catch (CloneNotSupportedException ex) {
             throw new RuntimeException("This object cannot be cloned.");
         }
-
+        if (e instanceof Trackable) {
+            ((Trackable) e).setCreationDate(new Date());
+            ((Trackable) e).setLastModificationDate(new Date());
+        }
     }
 
     public static Entity get(int id) {
@@ -66,6 +70,8 @@ public class Database {
         }
         if (!exists)
             throw new EntityNotFoundException();
+        if (e instanceof Trackable)
+            ((Trackable) e).setLastModificationDate(new Date());
     }
 
     public static void registerValidator(int entityCode, Validator validator) {
@@ -73,6 +79,6 @@ public class Database {
             if (entityCode == key)
                 throw new IllegalArgumentException("Validator with this code already exists.");
         }
-        validators.put(entityCode,validator);
+        validators.put(entityCode, validator);
     }
 }
