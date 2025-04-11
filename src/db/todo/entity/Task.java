@@ -5,12 +5,12 @@ import java.util.Date;
 
 public class Task extends Entity implements Trackable {
     public static final int TASK_ENTITY_CODE = 1;
-    Date CreationDate;
-    Date LastModificationDate;
-    String title;
-    String description;
-    Date dueDate;
-    Status status;
+    public Date CreationDate;
+    public Date LastModificationDate;
+    public String title;
+    public String description;
+    public Date dueDate;
+    public Status status;
 
     public enum Status {
         NotStarted,
