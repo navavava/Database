@@ -23,4 +23,9 @@ public class Step extends Entity {
         return STEP_ENTITY_CODE;
     }
 
+    @Override
+    public Step clone() throws CloneNotSupportedException {
+        return (Step) super.clone();
+    }
+
 }
