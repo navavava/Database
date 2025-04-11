@@ -1,5 +1,4 @@
 package db;
-
 import java.util.Date;
 
 public interface Trackable {

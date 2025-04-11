@@ -13,8 +13,10 @@ public class Database {
 
 
     public static void add(Entity e) throws InvalidEntityException {
-        Validator validator = validators.get(e.getEntityCode());
-        validator.validate(e);
+        if (validators.containsKey(e.getEntityCode())) {
+            Validator validator = validators.get(e.getEntityCode());
+            validator.validate(e);
+        }
         e.id = nextId;
         nextId++;
         try {
@@ -53,8 +55,10 @@ public class Database {
     }
 
     public static void update(Entity e) throws InvalidEntityException {
-        Validator validator = validators.get(e.getEntityCode());
-        validator.validate(e);
+        if (validators.containsKey(e.getEntityCode())) {
+            Validator validator = validators.get(e.getEntityCode());
+            validator.validate(e);
+        }
         boolean exists = false;
         for (Entity entity : entities) {
             if (e.id == entity.id) {
