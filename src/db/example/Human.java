@@ -16,4 +16,8 @@ public class Human extends Entity {
         return HUMAN_ENTITY_CODE;
     }
 
+    @Override
+    public Human clone() throws CloneNotSupportedException {
+        return (Human)super.clone();
+    }
 }
