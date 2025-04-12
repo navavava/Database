@@ -16,7 +16,7 @@ public class TaskService {
     public static void add() {
         Scanner scn = new Scanner(System.in);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//        dateFormat.setLenient(false);
+        dateFormat.setLenient(false);
         String title;
         String description;
         String dateStr;
@@ -97,8 +97,6 @@ public class TaskService {
                         }
                     }
                 }
-
-
             } else if (newValue.equalsIgnoreCase("InProgress")) {
                 task.status = Task.Status.InProgress;
             }
@@ -135,7 +133,7 @@ public class TaskService {
                 numberOfSteps++;
             }
             if (numberOfSteps == 1) {
-                System.out.println("No Steps");
+                System.out.println("No Steps found.");
             }
         }
     }
@@ -158,12 +156,16 @@ public class TaskService {
 
         System.out.println("Enter the ID you want: ");
         int id = scn.nextInt();
-        Task gettedTask = (Task) Database.get(id);
-        System.out.println("Details: ");
-        System.out.println("Title: " + gettedTask.title);
-        System.out.println("Description: " + gettedTask.description);
-        System.out.println("Status: " + gettedTask.status);
-        System.out.println("Due date: " + gettedTask.dueDate);
+        try {
+            Task task = (Task) Database.get(id);
+            System.out.println("Details: ");
+            System.out.println("Title: " + task.title);
+            System.out.println("Description: " + task.description);
+            System.out.println("Status: " + task.status);
+            System.out.println("Due date: " + task.dueDate);
+        } catch (Exception e) {
+            System.out.println("Something went wrong, this ID might not belong to a task.");
+        }
     }
 
 

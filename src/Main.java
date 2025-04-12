@@ -18,14 +18,14 @@ public class Main {
 
         while (true) {
             System.out.println("Enter a command: ");
-            String command = scn.next();
+            String command = scn.nextLine();
 
             switch (command.toLowerCase()) {
-                case "add-task":
+                case "add task":
                         add();
                     break;
 
-                case "add-step":
+                case "add step":
                     addStep();
                     break;
 
@@ -33,11 +33,11 @@ public class Main {
                     delete();
                     break;
 
-                case "update-task":
+                case "update task":
                     update();
                     break;
 
-                case "update-step":
+                case "update step":
                     updateStep();
                     break;
 

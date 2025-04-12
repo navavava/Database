@@ -17,9 +17,9 @@ public class StepService {
         Scanner scn = new Scanner(System.in);
         String title;
         int taskRef;
-        System.out.println("title:");
+        System.out.println("Title: ");
         title = scn.nextLine();
-        System.out.println("Task ID:");
+        System.out.println("Task ID: ");
         taskRef = scn.nextInt();
         Step newStep = new Step(title, taskRef, Step.Status.NotStarted);
         try {
@@ -43,7 +43,7 @@ public class StepService {
         Scanner scn = new Scanner(System.in);
         System.out.println("ID: ");
         int ID = scn.nextInt();
-        System.out.println("Field: ");
+        System.out.println("Field you want to change: ");
         String nextField = scn.nextLine();
         System.out.println("New Value: ");
         String newValue = scn.nextLine();
