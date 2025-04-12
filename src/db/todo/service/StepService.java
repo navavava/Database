@@ -1,8 +1,10 @@
 package db.todo.service;
+
 import db.Database;
 import db.exception.EntityNotFoundException;
 import db.exception.InvalidEntityException;
 import db.todo.entity.Step;
+
 import java.util.Scanner;
 
 public class StepService {
@@ -20,11 +22,14 @@ public class StepService {
         System.out.println("Task ID:");
         taskRef = scn.nextInt();
         Step newStep = new Step(title, taskRef, Step.Status.NotStarted);
-        Database.add(newStep);
-        System.out.println("Successfully added step");
-        System.out.println("ID: "+newStep.id);
+        try {
+            Database.add(newStep);
+            System.out.println("Successfully added step");
+            System.out.println("ID: " + newStep.id);
+        } catch (InvalidEntityException e) {
+            System.out.println(e.getMessage());
+        }
     }
-
 
     public static void setAsCompleted(int stepId) throws InvalidEntityException {
         Step step = (Step) Database.get(stepId);
@@ -43,28 +48,32 @@ public class StepService {
         System.out.println("New Value: ");
         String newValue = scn.nextLine();
         Step step = (Step) Database.get(ID);
-        if(nextField.equalsIgnoreCase("Title")){
+        if (nextField.equalsIgnoreCase("Title")) {
             step.title = newValue;
         } else if (nextField.equalsIgnoreCase("Task ID")) {
             step.taskRef = Integer.parseInt(newValue);
-        }else if (nextField.equalsIgnoreCase("Status")){
-            if(newValue.equalsIgnoreCase("Completed")){
+        } else if (nextField.equalsIgnoreCase("Status")) {
+            if (newValue.equalsIgnoreCase("Completed")) {
                 StepService.setAsCompleted(ID);
-            } else{
+            } else {
                 System.out.println("Invalid status.");
             }
         }
-        Database.update(step);
+        try {
+            Database.update(step);
+        } catch (InvalidEntityException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
-    public static void delete(){
+    public static void delete() {
         Scanner scn = new Scanner(System.in);
 
         System.out.println("Enter the ID:");
         int ID = scn.nextInt();
         try {
             Database.delete(ID);
-        }catch(EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             System.out.println(e.getMessage());
             return;
         }

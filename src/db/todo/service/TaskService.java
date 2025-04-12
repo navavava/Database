@@ -13,23 +13,10 @@ import java.util.ArrayList;
 
 public class TaskService {
 
-
-    public static void setAsCompleted(int taskId) throws InvalidEntityException {
-        Task task = (Task) Database.get(taskId);
-        task.status = Task.Status.Completed;
-        Database.update(task);
-    }
-
-    public static void setAsInProgress(int taskId) throws InvalidEntityException {
-        Task task = (Task) Database.get(taskId);
-        task.status = Task.Status.InProgress;
-        Database.update(task);
-    }
-
-    public static void add() throws InvalidEntityException {
+    public static void add() {
         Scanner scn = new Scanner(System.in);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        dateFormat.setLenient(false);
+//        dateFormat.setLenient(false);
         String title;
         String description;
         String dateStr;
@@ -49,13 +36,37 @@ public class TaskService {
         }
 
         Task newTask = new Task(title, description, dueDate, Task.Status.NotStarted);
-        Database.add(newTask);
-        System.out.println("Task saved successfully.");
-        System.out.println("Task ID: " + newTask.id);
+        try {
+            Database.add(newTask);
+            System.out.println("Task saved successfully.");
+            System.out.println("Task ID: " + newTask.id);
+        } catch (InvalidEntityException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void setAsCompleted(int taskId) {
+        Task task = (Task) Database.get(taskId);
+        task.status = Task.Status.Completed;
+        try {
+            Database.update(task);
+        } catch (InvalidEntityException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void setAsInProgress(int taskId) {
+        Task task = (Task) Database.get(taskId);
+        task.status = Task.Status.InProgress;
+        try {
+            Database.update(task);
+        } catch (InvalidEntityException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 
-    public static void update() throws InvalidEntityException {
+    public static void update() {
 
         Scanner scn = new Scanner(System.in);
         System.out.println("ID: ");
@@ -79,7 +90,11 @@ public class TaskService {
                     if (((Step) entity).taskRef == ID) {
                         Step step = (Step) entity;
                         step.status = Step.Status.Completed;
-                        Database.update(step);
+                        try {
+                            Database.update(step);
+                        } catch (InvalidEntityException e) {
+                            System.out.println(e.getMessage());
+                        }
                     }
                 }
 
@@ -145,10 +160,10 @@ public class TaskService {
         int id = scn.nextInt();
         Task gettedTask = (Task) Database.get(id);
         System.out.println("Details: ");
-        System.out.println("Title: "+gettedTask.title);
-        System.out.println("Description: "+gettedTask.description);
-        System.out.println("Status: "+gettedTask.status);
-        System.out.println("Due date: "+gettedTask.dueDate);
+        System.out.println("Title: " + gettedTask.title);
+        System.out.println("Description: " + gettedTask.description);
+        System.out.println("Status: " + gettedTask.status);
+        System.out.println("Due date: " + gettedTask.dueDate);
     }
 
 

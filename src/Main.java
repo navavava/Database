@@ -2,7 +2,9 @@ import db.*;
 import db.exception.*;
 import db.todo.entity.*;
 import db.todo.validator.*;
+
 import java.util.Scanner;
+
 import static db.todo.service.StepService.*;
 import static db.todo.service.TaskService.*;
 
@@ -14,13 +16,13 @@ public class Main {
         Database.registerValidator(Step.STEP_ENTITY_CODE, new StepValidator());
         Scanner scn = new Scanner(System.in);
 
-        while (true){
+        while (true) {
             System.out.println("Enter a command: ");
             String command = scn.next();
 
-            switch (command.toLowerCase()) {  // Convert to lowercase for case-insensitive matching
+            switch (command.toLowerCase()) {
                 case "add":
-                    add();
+                        add();
                     break;
 
                 case "add step":
