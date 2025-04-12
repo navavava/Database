@@ -13,9 +13,14 @@ public class Database {
 
 
     public static void add(Entity e) throws InvalidEntityException {
+
         if (validators.containsKey(e.getEntityCode())) {
             Validator validator = validators.get(e.getEntityCode());
             validator.validate(e);
+        }
+        if (e instanceof Trackable) {
+            ((Trackable) e).setCreationDate(new Date());
+            ((Trackable) e).setLastModificationDate(new Date());
         }
         e.id = nextId;
         nextId++;
@@ -24,10 +29,16 @@ public class Database {
         } catch (CloneNotSupportedException ex) {
             throw new RuntimeException("This object cannot be cloned.");
         }
-        if (e instanceof Trackable) {
-            ((Trackable) e).setCreationDate(new Date());
-            ((Trackable) e).setLastModificationDate(new Date());
+    }
+
+    //my own method
+    public static boolean entityExists(int id) {
+        for (Entity e : entities) {
+            if (e.id == id) {
+                return true;
+            }
         }
+        return false;
     }
 
     public static Entity get(int id) {
@@ -84,5 +95,20 @@ public class Database {
                 throw new IllegalArgumentException("Validator with this code already exists.");
         }
         validators.put(entityCode, validator);
+    }
+
+    public static ArrayList<Entity> getAll(int entityCode) {
+        boolean um = false;
+        ArrayList<Entity> ents = new ArrayList<>();
+        for (Entity e : entities) {
+            if (e.entityCode == entityCode) {
+                ents.add(e);
+                um = true;
+            }
+        }
+        if (!um)
+            throw new EntityNotFoundException("Entity with this ENTITY CODE does not exist.");
+        else
+            return ents;
     }
 }

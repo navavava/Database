@@ -1,36 +1,66 @@
-import db.example.*;
 import db.*;
 import db.exception.*;
+import db.todo.entity.*;
+import db.todo.validator.*;
+
+import java.util.Scanner;
+
+import static db.todo.service.StepService.*;
+import static db.todo.service.TaskService.*;
+
 
 public class Main {
     public static void main(String[] args) throws InvalidEntityException {
-        Document doc = new Document("Eid Eid Eid");
 
-        Database.add(doc);
+        Database.registerValidator(Task.TASK_ENTITY_CODE, new TaskValidator());
+        Database.registerValidator(Step.STEP_ENTITY_CODE, new StepValidator());
+        Scanner scn = new Scanner(System.in);
 
-        System.out.println("Document added");
+        while (true) {
+            System.out.println("Enter a command: ");
+            String command = scn.nextLine();
 
-        System.out.println("id: " + doc.id);
-        System.out.println("content: " + doc.content);
-        System.out.println("creation date: " + doc.getCreationDate());
-        System.out.println("last modification date: " + doc.getLastModificationDate());
-        System.out.println();
+            switch (command.toLowerCase()) {
+                case "add task":
+                        add();
+                    break;
 
-        try {
-            Thread.sleep(30_000);
-        } catch (InterruptedException e) {
-            System.out.println("Sleep interrupted!");
+                case "add step":
+                    addStep();
+                    break;
+
+                case "delete":
+                    delete();
+                    break;
+
+                case "update task":
+                    update();
+                    break;
+
+                case "update step":
+                    updateStep();
+                    break;
+
+                case "get task-by-id":
+                    getTaskById();
+                    break;
+
+                case "get all-tasks":
+                    getAllTasks();
+                    break;
+
+                case "get incomplete-tasks":
+                    getIncompleteTasks();
+                    break;
+
+                case "exit":
+                    System.exit(0);
+                    break;
+
+                default:
+                    System.out.println("Invalid command.");
+                    break;
+            }
         }
-
-        doc.content = "This is the new content";
-
-        Database.update(doc);
-
-        System.out.println("Document updated");
-        System.out.println("id: " + doc.id);
-        System.out.println("content: " + doc.content);
-        System.out.println("creation date: " + doc.getCreationDate());
-        System.out.println("last modification date: " + doc.getLastModificationDate());
-
     }
 }
