@@ -21,11 +21,11 @@ public class Main {
             String command = scn.next();
 
             switch (command.toLowerCase()) {
-                case "add":
+                case "add-task":
                         add();
                     break;
 
-                case "add step":
+                case "add-step":
                     addStep();
                     break;
 
@@ -33,11 +33,11 @@ public class Main {
                     delete();
                     break;
 
-                case "update":
+                case "update-task":
                     update();
                     break;
 
-                case "update step":
+                case "update-step":
                     updateStep();
                     break;
 

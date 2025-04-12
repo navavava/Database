@@ -13,7 +13,7 @@ public class StepService {
         Database.add(step);
     }
 
-    public static void addStep() throws InvalidEntityException {
+    public static void addStep() {
         Scanner scn = new Scanner(System.in);
         String title;
         int taskRef;
@@ -24,7 +24,7 @@ public class StepService {
         Step newStep = new Step(title, taskRef, Step.Status.NotStarted);
         try {
             Database.add(newStep);
-            System.out.println("Successfully added step");
+            System.out.println("Successfully added the step.");
             System.out.println("ID: " + newStep.id);
         } catch (InvalidEntityException e) {
             System.out.println(e.getMessage());

@@ -13,9 +13,14 @@ public class Database {
 
 
     public static void add(Entity e) throws InvalidEntityException {
+
         if (validators.containsKey(e.getEntityCode())) {
             Validator validator = validators.get(e.getEntityCode());
             validator.validate(e);
+        }
+        if (e instanceof Trackable) {
+            ((Trackable) e).setCreationDate(new Date());
+            ((Trackable) e).setLastModificationDate(new Date());
         }
         e.id = nextId;
         nextId++;
@@ -23,10 +28,6 @@ public class Database {
             entities.add((Entity) e.clone());
         } catch (CloneNotSupportedException ex) {
             throw new RuntimeException("This object cannot be cloned.");
-        }
-        if (e instanceof Trackable) {
-            ((Trackable) e).setCreationDate(new Date());
-            ((Trackable) e).setLastModificationDate(new Date());
         }
     }
 

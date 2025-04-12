@@ -54,8 +54,8 @@ public class Task extends Entity implements Trackable {
     @Override
     public Task clone() throws CloneNotSupportedException {
         Task task = (Task)super.clone();
-        task.CreationDate = new Date(this.CreationDate.getTime());
-        task.LastModificationDate = new Date(this.LastModificationDate.getTime());
+        task.CreationDate = new Date(this.getCreationDate().getTime());
+        task.LastModificationDate = new Date(this.getLastModificationDate().getTime());
         return task;
     }
 
