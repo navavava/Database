@@ -46,28 +46,7 @@ public class TaskService {
         }
     }
 
-    public static void setAsCompleted(int taskId) {
-        Task task = (Task) Database.get(taskId);
-        task.status = Task.Status.Completed;
-        try {
-            Database.update(task);
-        } catch (InvalidEntityException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public static void setAsInProgress(int taskId) {
-        Task task = (Task) Database.get(taskId);
-        task.status = Task.Status.InProgress;
-        try {
-            Database.update(task);
-        } catch (InvalidEntityException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-
-    public static void update() {
+    public static void updateTask() {
 
         Scanner scn = new Scanner(System.in);
         System.out.println("ID: ");
@@ -87,7 +66,7 @@ public class TaskService {
             } else if (nextField.equalsIgnoreCase("Status")) {
                 if (newValue.equalsIgnoreCase("Completed")) {
                     task.status = Task.Status.Completed;
-                    ArrayList<Entity> entities = Database.getAll(12);
+                    ArrayList<Entity> entities = Database.getAll(Step.STEP_ENTITY_CODE);
                     for (Entity entity : entities) {
                         if (((Step) entity).taskRef == ID) {
                             Step step = (Step) entity;
@@ -106,8 +85,8 @@ public class TaskService {
             try {
                 Database.update(task);
                 System.out.println("Successfully updated the task.");
-            } catch (Exception e) {
-                System.out.println("Something went wrong.");
+            } catch (InvalidEntityException e) {
+                System.out.println(e.getMessage());
             }
         } catch (EntityNotFoundException e) {
             System.out.println("Cannot update entity with ID = " + ID);
@@ -175,7 +154,6 @@ public class TaskService {
 
     public static void getTaskById() {
         Scanner scn = new Scanner(System.in);
-
         System.out.println("Enter the ID you want: ");
         int id = scn.nextInt();
         try {
@@ -185,6 +163,17 @@ public class TaskService {
             System.out.println("Description: " + task.description);
             System.out.println("Status: " + task.status);
             System.out.println("Due date: " + task.dueDate);
+            ArrayList<Entity> entities = Database.getAll(Step.STEP_ENTITY_CODE);
+            int numberOfSteps = 1;
+            for (Entity step : entities) {
+                if (((Step) step).taskRef == id) {
+                    System.out.println("Step " + numberOfSteps);
+                    System.out.println("Title: " + ((Step)step).title);
+                    System.out.println("ID: " + ((Step)step).id);
+                    System.out.println("Status: " + ((Step)step).status);
+                    numberOfSteps++;
+                }
+            }
         } catch (Exception e) {
             System.out.println("Something went wrong, this ID might not belong to a task.");
         }

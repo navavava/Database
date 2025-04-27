@@ -21,12 +21,17 @@ public class StepService {
         title = scn.nextLine();
         System.out.println("Task ID: ");
         taskRef = scn.nextInt();
+        scn.nextLine();
         Step newStep = new Step(title, taskRef, Step.Status.NotStarted);
         try {
             Database.add(newStep);
             System.out.println("Successfully added the step.");
             System.out.println("ID: " + newStep.id);
         } catch (InvalidEntityException e) {
+            System.out.println(e.getMessage());
+        }
+        catch (EntityNotFoundException e){
+            System.out.println("Cannot save step.");
             System.out.println(e.getMessage());
         }
     }

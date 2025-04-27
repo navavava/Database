@@ -15,6 +15,6 @@ public class StepValidator implements Validator {
         else if(((Step) entity).title.isEmpty() || ((Step) entity).title.equals("null"))
             throw new InvalidEntityException("Step title must contain a non empty string");
         else if(!(entityExists(((Step) entity).taskRef)))
-            throw new EntityNotFoundException("This task does not exist.");
+            throw new EntityNotFoundException(((Step) entity).taskRef);
     }
 }

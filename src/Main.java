@@ -40,7 +40,7 @@ public class Main {
 
                 case "update task":
                     try {
-                        update();
+                        updateTask();
                     } catch (InputMismatchException e) {
                         System.out.println("Error: Invalid input.");
                     }
