@@ -21,12 +21,17 @@ public class StepService {
         title = scn.nextLine();
         System.out.println("Task ID: ");
         taskRef = scn.nextInt();
+        scn.nextLine();
         Step newStep = new Step(title, taskRef, Step.Status.NotStarted);
         try {
             Database.add(newStep);
             System.out.println("Successfully added the step.");
             System.out.println("ID: " + newStep.id);
         } catch (InvalidEntityException e) {
+            System.out.println(e.getMessage());
+        }
+        catch (EntityNotFoundException e){
+            System.out.println("Cannot save step.");
             System.out.println(e.getMessage());
         }
     }
@@ -43,25 +48,32 @@ public class StepService {
         Scanner scn = new Scanner(System.in);
         System.out.println("ID: ");
         int ID = scn.nextInt();
+        scn.nextLine();
+        System.out.println("Fields you can change: Title, Task ID, Status.");
         System.out.println("Field you want to change: ");
         String nextField = scn.nextLine();
         System.out.println("New Value: ");
         String newValue = scn.nextLine();
-        Step step = (Step) Database.get(ID);
-        if (nextField.equalsIgnoreCase("Title")) {
-            step.title = newValue;
-        } else if (nextField.equalsIgnoreCase("Task ID")) {
-            step.taskRef = Integer.parseInt(newValue);
-        } else if (nextField.equalsIgnoreCase("Status")) {
-            if (newValue.equalsIgnoreCase("Completed")) {
-                StepService.setAsCompleted(ID);
-            } else {
-                System.out.println("Invalid status.");
-            }
-        }
         try {
-            Database.update(step);
-        } catch (InvalidEntityException e) {
+            Step step = (Step) Database.get(ID);
+            if (nextField.equalsIgnoreCase("Title")) {
+                step.title = newValue;
+            } else if (nextField.equalsIgnoreCase("Task ID")) {
+                step.taskRef = Integer.parseInt(newValue);
+            } else if (nextField.equalsIgnoreCase("Status")) {
+                if (newValue.equalsIgnoreCase("Completed")) {
+                    StepService.setAsCompleted(ID);
+                } else {
+                    System.out.println("Invalid status.");
+                }
+            }
+            try {
+                Database.update(step);
+            } catch (InvalidEntityException e) {
+                System.out.println(e.getMessage());
+            }
+        } catch (EntityNotFoundException e) {
+            System.out.println("Cannot update step with ID = " + ID);
             System.out.println(e.getMessage());
         }
     }
@@ -74,9 +86,10 @@ public class StepService {
         try {
             Database.delete(ID);
         } catch (EntityNotFoundException e) {
+            System.out.println("Cannot delete entity with ID = " + ID);
             System.out.println(e.getMessage());
             return;
         }
-        System.out.println("Successfully deleted step.");
+        System.out.println("Successfully deleted step with ID = " + ID);
     }
 }
