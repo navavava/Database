@@ -65,7 +65,7 @@ public class Database {
             throw new EntityNotFoundException(id);
     }
 
-    public static void update(Entity e) throws InvalidEntityException {
+    public static void update(Entity e) throws InvalidEntityException{
         if (validators.containsKey(e.getEntityCode())) {
             Validator validator = validators.get(e.getEntityCode());
             validator.validate(e);
@@ -84,7 +84,7 @@ public class Database {
             }
         }
         if (!exists)
-            throw new EntityNotFoundException();
+            throw new EntityNotFoundException(e.id);
         if (e instanceof Trackable)
             ((Trackable) e).setLastModificationDate(new Date());
     }
@@ -101,14 +101,11 @@ public class Database {
         boolean um = false;
         ArrayList<Entity> ents = new ArrayList<>();
         for (Entity e : entities) {
-            if (e.entityCode == entityCode) {
+            if (e.getEntityCode() == entityCode) {
                 ents.add(e);
                 um = true;
             }
         }
-        if (!um)
-            throw new EntityNotFoundException("Entity with this ENTITY CODE does not exist.");
-        else
-            return ents;
+        return ents;
     }
 }

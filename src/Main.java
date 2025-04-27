@@ -3,6 +3,7 @@ import db.exception.*;
 import db.todo.entity.*;
 import db.todo.validator.*;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import static db.todo.service.StepService.*;
@@ -22,7 +23,7 @@ public class Main {
 
             switch (command.toLowerCase()) {
                 case "add task":
-                        add();
+                    add();
                     break;
 
                 case "add step":
@@ -30,19 +31,35 @@ public class Main {
                     break;
 
                 case "delete":
-                    delete();
+                    try {
+                        delete();
+                    } catch (InputMismatchException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
 
                 case "update task":
-                    update();
+                    try {
+                        update();
+                    } catch (InputMismatchException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
 
                 case "update step":
-                    updateStep();
+                    try {
+                        updateStep();
+                    } catch (InputMismatchException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
 
                 case "get task-by-id":
-                    getTaskById();
+                    try {
+                        getTaskById();
+                    } catch (InputMismatchException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
 
                 case "get all-tasks":
