@@ -34,7 +34,7 @@ public class Main {
                     try {
                         delete();
                     } catch (InputMismatchException e) {
-                        System.out.println(e.getMessage());
+                        System.out.println("Error: Invalid input.");
                     }
                     break;
 
@@ -42,7 +42,7 @@ public class Main {
                     try {
                         update();
                     } catch (InputMismatchException e) {
-                        System.out.println(e.getMessage());
+                        System.out.println("Error: Invalid input.");
                     }
                     break;
 
@@ -50,7 +50,7 @@ public class Main {
                     try {
                         updateStep();
                     } catch (InputMismatchException e) {
-                        System.out.println(e.getMessage());
+                        System.out.println("Error: Invalid input.");
                     }
                     break;
 
@@ -58,7 +58,7 @@ public class Main {
                     try {
                         getTaskById();
                     } catch (InputMismatchException e) {
-                        System.out.println(e.getMessage());
+                        System.out.println("Error: Invalid input.");
                     }
                     break;
 
